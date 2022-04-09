@@ -122,10 +122,10 @@ class Queries(object):
       }}
       nodes {{
         nameWithOwner
-        stargazers {{
-          totalCount
-        }}
-        forkCount
+        #stargazers {{
+        #  totalCount
+        #}}
+        #forkCount
         languages(first: 10, orderBy: {{field: SIZE, direction: DESC}}) {{
           edges {{
             size
@@ -158,10 +158,10 @@ class Queries(object):
       }}
       nodes {{
         nameWithOwner
-        stargazers {{
-          totalCount
-        }}
-        forkCount
+        #stargazers {{
+        #  totalCount
+        #}}
+        #forkCount
         languages(first: 10, orderBy: {{field: SIZE, direction: DESC}}) {{
           edges {{
             size
@@ -241,8 +241,8 @@ class Stats(object):
         self.queries = Queries(username, access_token, session)
 
         self._name = None
-        self._stargazers = None
-        self._forks = None
+        #self._stargazers = None
+        #self._forks = None
         self._total_contributions = None
         self._languages = None
         self._repos = None
@@ -259,8 +259,8 @@ class Stats(object):
         )
         lines_changed = await self.lines_changed
         return f"""Name: {await self.name}
-Stargazers: {await self.stargazers:,}
-Forks: {await self.forks:,}
+#Stargazers: {await self.stargazers:,}
+#Forks: {await self.forks:,}
 All-time contributions: {await self.total_contributions:,}
 Repositories with contributions: {len(await self.all_repos)}
 Lines of code added: {lines_changed[0]:,}
@@ -274,8 +274,8 @@ Languages:
         """
         Get lots of summary statistics using one big query. Sets many attributes
         """
-        self._stargazers = 0
-        self._forks = 0
+        #self._stargazers = 0
+        #self._forks = 0
         self._languages = dict()
         self._repos = set()
         self._ignored_repos = set()
@@ -323,8 +323,8 @@ Languages:
                 if name in self._repos or name in self._exclude_repos:
                     continue
                 self._repos.add(name)
-                self._stargazers += repo.get("stargazers").get("totalCount", 0)
-                self._forks += repo.get("forkCount", 0)
+                #self._stargazers += repo.get("stargazers").get("totalCount", 0)
+                #self._forks += repo.get("forkCount", 0)
 
                 for lang in repo.get("languages", {}).get("edges", []):
                     name = lang.get("node", {}).get("name", "Other")
@@ -367,7 +367,7 @@ Languages:
         await self.get_stats()
         assert(self._name is not None)
         return self._name
-
+    '''
     @property
     async def stargazers(self) -> int:
         """
@@ -389,7 +389,7 @@ Languages:
         await self.get_stats()
         assert(self._forks is not None)
         return self._forks
-
+    '''
     @property
     async def languages(self) -> Dict:
         """
